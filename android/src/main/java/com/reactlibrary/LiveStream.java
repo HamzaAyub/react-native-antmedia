@@ -34,6 +34,8 @@ import io.antmedia.webrtcandroidframework.WebRTCClient;
 import io.antmedia.webrtcandroidframework.apprtc.CallActivity;
 import io.antmedia.webrtcandroidframework.apprtc.CallFragment;
 
+import static io.antmedia.webrtcandroidframework.apprtc.CallActivity.EXTRA_CAPTURETOTEXTURE_ENABLED;
+
 public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
     public static final String SERVER_URL = "ws://34.255.219.25:5080/LiveApp/websocket";
