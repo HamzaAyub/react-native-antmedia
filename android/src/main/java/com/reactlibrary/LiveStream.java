@@ -1,5 +1,6 @@
 package com.reactlibrary;
 
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
