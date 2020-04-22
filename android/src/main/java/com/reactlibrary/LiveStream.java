@@ -5,6 +5,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
@@ -46,9 +48,9 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
     private ImageButton btnFlashLight;
     private LinearLayout showLiveIconWithText;
     private TextView txtShowTime;
-    private boolean timeCheck = true;
     private Handler handler;
     private int i = 0;
+    private ImageView btnStopBroadcast;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -69,6 +71,7 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
         btnFlashLight = findViewById(R.id.btn_flash_light);
         showLiveIconWithText = findViewById(R.id.show_live_icon_with_text);
         txtShowTime = findViewById(R.id.txt_show_time);
+        btnStopBroadcast = findViewById(R.id.btn_stop_broadcast);
         webRTCClient = new WebRTCClient(this, this, new WebRtcAudioRecord.IAudioRecordStatusListener() {
             @Override
             public void audioRecordStarted() {
@@ -116,6 +119,33 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
             }
         });
+
+        btnStopBroadcast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(LiveStream.this);
+                builder.setTitle("Stop Broadcast!");
+                builder.setMessage("Are you sure you want to stop this broadcast?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+            }
+        });
+
         startTimer();
     }
 
