@@ -86,7 +86,7 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
         });
 
 
-        //webRTCClient.setOpenFrontCamera(false);
+        webRTCClient.setOpenFrontCamera(false);
 
         String streamId = "stream2";
         String tokenId = "tokenId";
@@ -146,8 +146,8 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
             }
         });
-
-        startTimer();
+        webRTCClient.startStream();
+        // startTimer();
     }
 
     Runnable runnable = new Runnable() {
@@ -218,8 +218,9 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
     @Override
     public void onPublishStarted() {
+        startTimer();
         Log.w(getClass().getSimpleName(), "onPublishStarted");
-        Toast.makeText(this, "Publish started", Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "Publish started", Toast.LENGTH_LONG).show();
 
     }
 
