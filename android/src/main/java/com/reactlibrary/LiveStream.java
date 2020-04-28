@@ -85,11 +85,15 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
             }
         });
 
-
-        webRTCClient.setOpenFrontCamera(false);
-
-        String streamId = "stream2";
+        String streamId = getIntent().getStringExtra("streamName");
+        Boolean isFrontCamera = getIntent().getExtras().getBoolean("isFrontCamera");
         String tokenId = "tokenId";
+        streamId = "stream_"+streamId;
+
+        if (!isFrontCamera) {
+            webRTCClient.setOpenFrontCamera(false);
+        }
+
 
         SurfaceViewRenderer cameraViewRenderer = findViewById(R.id.publish_view_renderer);
         webRTCClient.setVideoRenderers(null, cameraViewRenderer);
