@@ -135,7 +135,8 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        webRTCClient.stopStream();
+                        LiveStream.this.finish();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
