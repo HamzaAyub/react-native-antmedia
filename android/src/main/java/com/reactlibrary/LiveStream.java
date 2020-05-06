@@ -231,19 +231,16 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
     @Override
     public void onPublishFinished() {
         Log.w(getClass().getSimpleName(), "onPublishFinished");
-        Toast.makeText(this, "Publish finished", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onPlayFinished() {
         Log.w(getClass().getSimpleName(), "onPlayFinished");
-        Toast.makeText(this, "Play finished", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void noStreamExistsToPlay() {
         Log.w(getClass().getSimpleName(), "noStreamExistsToPlay");
-        Toast.makeText(this, "No stream exist to play", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -266,13 +263,11 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
     @Override
     public void onSignalChannelClosed(WebSocket.WebSocketConnectionObserver.WebSocketCloseNotification code) {
-        Toast.makeText(this, "Signal channel closed with code " + code, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDisconnected() {
         Log.w(getClass().getSimpleName(), "disconnected");
-        Toast.makeText(this, "Disconnected", Toast.LENGTH_LONG).show();
     }
 
     @Override
