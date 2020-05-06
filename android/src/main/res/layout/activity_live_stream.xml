@@ -98,7 +98,8 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/flash_on"
             android:background="#00000000"
-            android:id="@+id/btn_flash_light"/>
+            android:id="@+id/btn_flash_light"
+            android:alpha="0.2"/>
 
         <ImageView
             android:layout_width="45dp"
