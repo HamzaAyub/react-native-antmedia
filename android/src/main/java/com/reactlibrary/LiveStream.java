@@ -113,7 +113,7 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
         btnCameraSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webRTCClient.switchCamera();
+                // webRTCClient.switchCamera();
             }
         });
 
