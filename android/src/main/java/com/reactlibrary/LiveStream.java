@@ -41,7 +41,7 @@ import static io.antmedia.webrtcandroidframework.apprtc.CallActivity.EXTRA_CAPTU
 
 public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
-    public static final String SERVER_URL = "ws://34.255.219.25:5080/LiveApp/websocket";
+    public static final String SERVER_URL = "wss://antmedia.hapity.com:5443/WebRTCAppEE/websocket";
     private CallFragment callFragment;
 
     private WebRTCClient webRTCClient;
