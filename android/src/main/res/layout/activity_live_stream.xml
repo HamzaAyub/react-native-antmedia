@@ -90,7 +90,7 @@
             android:src="@drawable/camera_switch"
             android:background="#00000000"
             android:id="@+id/btn_switch_camera"
-            android:alpha="0.2"
+            android:alpha="1"
             />
 
         <ImageButton
