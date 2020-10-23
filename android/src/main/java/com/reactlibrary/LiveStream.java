@@ -21,14 +21,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.webrtc.RendererCommon;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.audio.WebRtcAudioRecord;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.tavendo.autobahn.WebSocket;
 import io.antmedia.webrtcandroidframework.IWebRTCClient;
@@ -52,6 +66,11 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
     private Handler handler;
     private int i = 0;
     private ImageView btnStopBroadcast;
+    private static final String TAG = "HTAG";
+    private String streamId;
+    private Boolean isYoutubeSharing;
+    private String youtubeRtmpUrl;
+    private String usersToken;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -85,8 +104,11 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
             }
         });
 
-        String streamId = getIntent().getStringExtra("streamName");
+        streamId = getIntent().getStringExtra("streamName");
         Boolean isFrontCamera = getIntent().getExtras().getBoolean("isFrontCamera");
+        isYoutubeSharing = getIntent().getExtras().getBoolean("isYoutubeSharing");
+        youtubeRtmpUrl = getIntent().getStringExtra("youtubeRtmpUrl");
+        usersToken = getIntent().getStringExtra("token");
         String tokenId = "tokenId";
 
         if (!isFrontCamera) {
@@ -168,6 +190,49 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
         }
     };
 
+    public void publishToYoutube () {
+        if (isYoutubeSharing) {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url = "https://staging.hapity.com/api/add_rtmp_endpoint";
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("HTAG", "onResponse success response : " + response);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    try {
+                        String responseBody = new String(error.networkResponse.data, "utf-8");
+                        Log.d(TAG, "onErrorResponse 1 : " + responseBody);
+                    } catch (UnsupportedEncodingException error1) {
+                        Log.d(TAG, "onErrorResponse 2 : " + error1);
+                    }
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    try {
+                        Map<String, String> params = new HashMap<>();
+                        //Adding parameters to request
+                        params.put("Content-Type", "application/json");
+                        params.put("Authorization", "Bearer " + usersToken);
+                        params.put("stream_id", streamId);
+                        params.put("rtmp_endpoint", youtubeRtmpUrl);
+                        return params;
+                    } catch (Exception e) {
+                        Log.d(TAG, "getParams:  ERRORRR  : "+ e);
+                    }
+                    return null;
+                }
+            };
+
+            queue.add(stringRequest);
+        }
+    }
+
     public void startTimer() {
         handler.postDelayed(runnable, 1000);
     }
@@ -223,6 +288,7 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
     @Override
     public void onPublishStarted() {
         startTimer();
+        publishToYoutube();
         Log.w(getClass().getSimpleName(), "onPublishStarted");
         // Toast.makeText(this, "Publish started", Toast.LENGTH_LONG).show();
 

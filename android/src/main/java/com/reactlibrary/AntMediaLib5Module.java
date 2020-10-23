@@ -30,12 +30,15 @@ public class AntMediaLib5Module extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startLiveStream(String streamName, Boolean isFrontCamera) {
+    public void startLiveStream(String token, String streamName, String youtubeRtmpUrl, Boolean isFrontCamera, Boolean isYoutubeSharing) {
         Log.d(TAG, "startLiveStream: start");
         Intent intent = new Intent(reactContext, LiveStream.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("streamName", streamName);
         intent.putExtra("isFrontCamera", isFrontCamera);
+        intent.putExtra("isYoutubeSharing", isYoutubeSharing);
+        intent.putExtra("youtubeRtmpUrl", youtubeRtmpUrl);
+        intent.putExtra("token", token);
         reactContext.startActivity(intent);
     }
 }
