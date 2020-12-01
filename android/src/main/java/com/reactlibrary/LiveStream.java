@@ -55,7 +55,7 @@ import static io.antmedia.webrtcandroidframework.apprtc.CallActivity.EXTRA_CAPTU
 
 public class LiveStream extends AppCompatActivity implements IWebRTCListener {
 
-    public static final String SERVER_URL = "wss://antmedia.hapity.com:5443/WebRTCAppEE/websocket";
+    public static final String SERVER_URL = "wss://antmedia.hapity.com:5443/LiveApp/websocket";
     private CallFragment callFragment;
 
     private WebRTCClient webRTCClient;
@@ -193,7 +193,7 @@ public class LiveStream extends AppCompatActivity implements IWebRTCListener {
     public void publishToYoutube () {
         if (isYoutubeSharing) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "https://staging.hapity.com/api/add_rtmp_endpoint";
+            String url = "https://www.hapity.com/api/add_rtmp_endpoint";
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
